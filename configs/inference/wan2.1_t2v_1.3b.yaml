@@ -1,0 +1,31 @@
+mode: anyflow
+normal_pretrained_path: Wan-AI/Wan2.1-T2V-1.3B-Diffusers
+anyflow_pretrained_path: nvidia/AnyFlow-Wan2.1-T2V-1.3B-Diffusers
+meanflow_nft_path: ''
+dtype: bf16
+num_steps: 4
+normal_num_steps: 50
+guidance_scale: 1.0
+normal_guidance_scale: 5.0
+negative_prompt: ''
+num_frames: 81
+height: 480
+width: 832
+fps: 16
+max_sequence_length: 512
+seed: 12345
+batch_size: 1
+prompts:
+- A sleek car drives through a neon-lit cyberpunk street at night.
+prompt_file: ''
+max_prompts: 0
+output_dir: ./inference_outputs/wan2.1
+lora_rank: 32
+lora_alpha: 64
+lora_target_modules:
+- to_q
+- to_k
+- to_v
+- to_out.0
+- net.0.proj
+- net.2

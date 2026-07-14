@@ -1,0 +1,43 @@
+# Tested Wan2.1 environment: Python 3.10, CUDA 12.4, PyTorch 2.6.
+# HPSv3 and VideoAlign's TRL dependency are installed separately with
+# --no-deps because their metadata pins an older Transformers release.
+
+accelerate==1.4.0
+av==17.0.0
+beautifulsoup4==4.14.3
+bitsandbytes==0.45.3
+datasets==3.3.2
+decord==0.6.0
+deepspeed==0.16.4
+diffusers @ git+https://github.com/huggingface/diffusers.git@77f8cf8bf557a0136d269baea773cef26eb5991a
+einops==0.8.1
+fire==0.7.1
+flash-attn==2.7.4.post1
+ftfy==6.3.1
+huggingface-hub==0.36.2
+imageio==2.37.3
+imageio-ffmpeg==0.6.0
+matplotlib==3.10.0
+numpy==1.26.4
+omegaconf==2.3.0
+opencv-python-headless==4.11.0.86
+packaging==26.0
+pandas==2.2.3
+peft==0.17.0
+Pillow==10.4.0
+protobuf==3.20.3
+PyYAML==6.0.3
+qwen-vl-utils==0.0.14
+requests==2.32.5
+safetensors==0.7.0
+sentencepiece==0.2.1
+tensorboard==2.20.0
+timm==1.0.26
+torch==2.6.0
+torchvision==0.21.0
+tqdm==4.67.1
+transformers==4.57.0
+triton==3.2.0
+vbench==0.1.5
+wandb==0.18.7
+xformers==0.0.29.post3

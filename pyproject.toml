@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meanflownft"
+version = "0.1.0"
+description = "Wan2.1 MeanFlowNFT training and inference"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.6.0",
+    "torchvision>=0.21.0",
+    "diffusers",
+    "transformers>=4.57.0",
+    "accelerate>=1.4.0",
+    "peft>=0.17.0",
+    "safetensors>=0.7.0",
+    "sentencepiece>=0.2.0",
+    "protobuf>=3.20.3",
+    "einops>=0.8.0",
+    "huggingface-hub>=0.36.0",
+    "imageio>=2.37.0",
+    "imageio-ffmpeg>=0.6.0",
+    "pyyaml>=6.0",
+    "wandb>=0.18.0",
+    "numpy>=1.26.0",
+    "Pillow>=10.0.0",
+]
+
+[project.urls]
+Homepage = "https://harahan.github.io/meanflownft-project-page/"
+Paper = "https://github.com/zhouxiangxin1998/MeanFlowNFT-paper"
+Repository = "https://github.com/Harahan/MeanFlowNFT"
+
+[tool.setuptools.packages.find]
+include = ["meanflownft*"]

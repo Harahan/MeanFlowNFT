@@ -1,0 +1,131 @@
+model:
+  pretrained_path: nvidia/AnyFlow-Wan2.1-T2V-1.3B-Diffusers
+  model_type: wan
+  gradient_checkpointing: true
+  dtype: bf16
+  generator_init_path: ''
+  generator_lora:
+    enabled: true
+    rank: 32
+    lora_alpha: 64
+    target_modules:
+    - to_q
+    - to_k
+    - to_v
+    - to_out.0
+    - net.0.proj
+    - net.2
+    init_lora_weights: gaussian
+    load_path: ''
+    pre_merge_paths: []
+    merge_before_training: false
+video:
+  num_frames: 81
+  eval_num_frames: 81
+  height: 480
+  width: 832
+  fps: 16
+  max_sequence_length: 512
+meanflow_nft:
+  num_epochs: 10000
+  num_batches_per_epoch: 2
+  num_inner_epochs: 1
+  nft_inner_batch_size: 0
+  nft_start_epoch: 0
+  num_image_per_prompt: 16
+  nft_sample_use_ema: false
+  sampling_num_steps: 4
+  sampling_guidance_scale: 1.0
+  per_prompt_stat_tracking: true
+  per_prompt_global_std: true
+  weight_advantages: true
+  adv_clip_max: 5.0
+  beta: 0.1
+  kl_weight: 0.0001
+  decay_type: 1
+  nft_decay_interval: 1
+  reward_fn:
+    hpsv3_general: 1.0
+    hpsv3_percentile: 1.0
+    videoalign_mq: 1.0
+    videoalign_ta: 1.0
+  reward_model_paths:
+    videoalign_dir: third_party/VideoAlign
+    videoalign_ckpt: models/VideoReward
+  log_sample_images: 0
+  nft_velocity_mode: meanflow_v
+  central_diff_epsilon: 5.0
+  cd_velocity_source: noise_minus_x0
+  share_cd_with_old: true
+  num_training_timesteps_per_sample: 4
+  nft_min_timestep: 0
+  nft_max_timestep: 1000
+  diffusion_ratio: 0.5
+  consistency_ratio: 0.25
+solver:
+  generator:
+    lr: 3.0e-06
+    warmup_steps: 0
+    beta1: 0.9
+    beta2: 0.999
+    eps: 1.0e-08
+    weight_decay: 0.0001
+    max_grad_norm: 1.0
+train:
+  total_steps: 0
+  save_interval: 50
+  log_interval: 1
+  seed: 42
+  batch_size: 2
+  gradient_accumulation_steps: 1
+  autocast_dtype: bf16
+  resume_from: ''
+  use_ema: true
+  ema_decay: 0.9
+  ema_every: 1
+distributed:
+  strategy: hsdp
+  fsdp_sharding: hybrid
+logging:
+  project: meanflownft-wan
+  run_name: wan2.1-t2v-1.3b-meanflow-nft
+  entity: ''
+  tags:
+  - wan2.1
+  - video
+  - anyflow
+  - meanflow-nft
+  - 480p
+  - 81f
+  enabled: true
+eval:
+  enabled: true
+  eval_interval: 50
+  eval_prompt_source: dataset
+  eval_prompt_path: ''
+  dataset: wan_dancegrpo
+  dataset_path: dataset
+  reward_fn:
+    hpsv3_general: 1.0
+    hpsv3_percentile: 1.0
+    videoalign_mq: 1.0
+    videoalign_ta: 1.0
+  reward_dataset_map: {}
+  reward_ckpt_path: ''
+  eval_num_steps: 4
+  eval_guidance_scale: 1.0
+  eval_batch_size: 1
+  num_media_images: 4
+  eval_seed: 12345
+  vbench:
+    enabled: false
+    aug_info_json: dataset/vbench/VBench_aug_full_info.json
+    full_info_json: dataset/vbench/VBench_full_info.json
+    num_samples_per_prompt: 5
+    num_inference_steps: 4
+    guidance_scale: 1.0
+    cache_dir: models/vbench
+    output_subdir: vbench
+    eval_every_epochs: 0
+prompt_path: dataset/wan_dancegrpo
+output_dir: ./outputs/wan_meanflow_nft
