@@ -1,0 +1,147 @@
+model:
+  pretrained_path: models/stable-diffusion-3.5-medium
+  model_type: sd35
+  gradient_checkpointing: true
+  dtype: bf16
+  image_resolution: 512
+  generator_init_path: ''
+  fake_score_init_path: ''
+  teacher_init_path: ''
+  generator_lora:
+    enabled: true
+    rank: 32
+    lora_alpha: 64
+    target_modules:
+    - attn.to_q
+    - attn.to_k
+    - attn.to_v
+    - attn.to_out.0
+    - attn.add_k_proj
+    - attn.add_v_proj
+    - attn.add_q_proj
+    - attn.to_add_out
+    init_lora_weights: gaussian
+    load_path: ''
+    merge_before_training: true
+  fake_score_lora:
+    enabled: true
+    rank: 32
+    lora_alpha: 64
+    target_modules:
+    - attn.to_q
+    - attn.to_k
+    - attn.to_v
+    - attn.to_out.0
+    - attn.add_k_proj
+    - attn.add_v_proj
+    - attn.add_q_proj
+    - attn.to_add_out
+    init_lora_weights: gaussian
+    load_path: ''
+flowmap_model:
+  enabled: true
+  gate_value: 0.25
+  deltatime_type: r
+anyflow_pretrain:
+  diffusion_ratio: 0.5
+  consistency_ratio: 0.25
+  epsilon: 5
+  cd_velocity_source: noise_minus_x0
+  v_target_source: noise_minus_x0
+  forward_guidance_scale: 1.0
+  weight_type: beta08
+  negative_embedding_path: ''
+  drop_text_ratio: 0.1
+  ema_warmup_steps: 200
+anyflow_onpolicy:
+  num_inference_steps_list:
+  - 2
+  - 4
+  - 8
+  - 16
+  - 40
+  dmd_weight: 1.0
+  dmd_batch_size: 0
+  dmd_min_timestep: 0
+  dmd_max_timestep: 1000
+  real_guidance_scale: 4.5
+  gradient_normalization: true
+  cotrain_forward_kl: true
+  discriminator_update_ratio: 1
+solver:
+  generator:
+    lr: 2.0e-06
+    warmup_steps: 0
+    beta1: 0.0
+    beta2: 0.999
+    eps: 1.0e-08
+    weight_decay: 0.0
+    max_grad_norm: 1.0
+  fake_score:
+    lr: 2.0e-06
+    warmup_steps: 0
+    beta1: 0.0
+    beta2: 0.999
+    eps: 1.0e-08
+    weight_decay: 0.0
+    max_grad_norm: 1.0
+train:
+  total_steps: 100000
+  save_interval: 200
+  log_interval: 1
+  seed: 42
+  batch_size: 4
+  gradient_accumulation_steps: 1
+  autocast_dtype: bf16
+  resume_from: ''
+  use_ema: true
+  ema_decay: 0.99
+  ema_every: 1
+distributed:
+  strategy: fsdp
+  fsdp_sharding: full_shard
+logging:
+  project: meanflownft
+  run_name: sd35m-anyflow-onpolicy-laion-aes-6p5
+  entity: ''
+  tags:
+  - sd35m
+  - anyflow
+  - stage2
+  - onpolicy
+  - dmd
+  - '512'
+  - laion-aes-6p5
+  enabled: true
+eval:
+  enabled: true
+  eval_interval: 200
+  eval_prompt_source: dataset
+  dataset: drawbench
+  dataset_path: dataset
+  reward_fn:
+    imagereward: 1.0
+    pickscore: 1.0
+    aesthetic: 1.0
+    clipscore: 1.0
+    hpsv2: 1.0
+    hpsv3: 1.0
+    geneval2: 1.0
+    ocr: 1.0
+  reward_dataset_map:
+    imagereward: drawbench
+    pickscore: drawbench
+    aesthetic: drawbench
+    clipscore: drawbench
+    hpsv2: drawbench
+    hpsv3: hpsv3
+    ocr: ocr
+    geneval2: geneval2
+  reward_ckpt_path: models/reward_ckpts
+  eval_num_steps: 4
+  eval_guidance_scale: 1.0
+  eval_batch_size: 16
+  num_media_images: 64
+  eval_seed: 12345
+prompt_path: data/anyflow/sd35m_laion_aes_6p5_40step_cfg4.5_512
+output_dir: ./outputs/sd35m_anyflow_onpolicy

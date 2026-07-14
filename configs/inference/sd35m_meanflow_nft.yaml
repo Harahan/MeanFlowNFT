@@ -1,0 +1,53 @@
+pretrained_path: models/stable-diffusion-3.5-medium
+dtype: bf16
+image_resolution: 1024
+num_stages: 3
+stage1_lora_path: ''
+stage2_lora_path: ''
+stage3_lora_path: ''
+lora_rank: 32
+lora_alpha: 64
+lora_target_modules:
+- attn.to_q
+- attn.to_k
+- attn.to_v
+- attn.to_out.0
+- attn.add_k_proj
+- attn.add_v_proj
+- attn.add_q_proj
+- attn.to_add_out
+flowmap_gate_value: 0.25
+flowmap_deltatime_type: r
+num_steps: 4
+normal_num_steps: 40
+normal_guidance_scale: 4.5
+text_max_sequence_length: 0
+seed: 12345
+batch_size: 16
+prompts: []
+prompt_file: dataset/pickscore/test.txt
+max_prompts: 64
+output_dir: ./inference_outputs/sd35m_meanflow_nft/steps_4
+eval_reward: false
+reward_fn:
+  imagereward: 1.0
+  pickscore: 1.0
+  aesthetic: 1.0
+  clipscore: 1.0
+  hpsv2: 1.0
+  hpsv3: 1.0
+  geneval2: 1.0
+  ocr: 1.0
+reward_dataset_map:
+  imagereward: drawbench
+  pickscore: drawbench
+  aesthetic: drawbench
+  clipscore: drawbench
+  hpsv2: drawbench
+  hpsv3: hpsv3
+  geneval2: geneval2
+  ocr: ocr
+dataset_path: dataset
+reward_ckpt_path: models/reward_ckpts
+distributed: false
+strategy: fsdp

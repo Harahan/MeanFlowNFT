@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "meanflownft"
+version = "0.1.0"
+description = "Official implementation of MeanFlowNFT for average-velocity generators"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.2.0",
+    "torchvision>=0.17.0",
+    "diffusers>=0.32.0",
+    "transformers>=4.57.0",
+    "accelerate>=1.0.0",
+    "peft>=0.17.0",
+    "safetensors>=0.7.0",
+    "sentencepiece",
+    "protobuf",
+    "hpsv2x>=1.2.0",
+    "pyyaml>=6.0",
+    "wandb>=0.16.0",
+    "numpy>=1.24.0",
+    "Pillow>=10.0.0",
+]
+
+[project.urls]
+Homepage = "https://harahan.github.io/meanflownft-project-page/"
+Paper = "https://github.com/zhouxiangxin1998/MeanFlowNFT-paper"
+Repository = "https://github.com/Harahan/MeanFlowNFT"
+
+[tool.setuptools.packages.find]
+include = ["meanflownft*"]

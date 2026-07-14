@@ -1,0 +1,126 @@
+model:
+  pretrained_path: models/stable-diffusion-3.5-medium
+  model_type: sd35
+  gradient_checkpointing: true
+  dtype: bf16
+  image_resolution: 512
+  generator_init_path: ''
+  generator_lora:
+    enabled: true
+    rank: 32
+    lora_alpha: 64
+    target_modules:
+    - attn.to_q
+    - attn.to_k
+    - attn.to_v
+    - attn.to_out.0
+    - attn.add_k_proj
+    - attn.add_v_proj
+    - attn.add_q_proj
+    - attn.to_add_out
+    init_lora_weights: gaussian
+    pre_merge_paths: []
+    load_path: ''
+    merge_before_training: true
+flowmap_model:
+  enabled: true
+  gate_value: 0.25
+  deltatime_type: r
+meanflow_nft:
+  num_epochs: 10000
+  num_batches_per_epoch: 16
+  num_inner_epochs: 1
+  nft_inner_batch_size: 0
+  nft_start_epoch: 0
+  num_image_per_prompt: 24
+  nft_sample_use_ema: false
+  sampling_num_steps: 4
+  sampling_guidance_scale: 1.0
+  text_max_sequence_length: 128
+  per_prompt_stat_tracking: true
+  per_prompt_global_std: true
+  adv_clip_max: 5.0
+  beta: 0.1
+  kl_weight: 0.0001
+  num_training_timesteps_per_sample: 4
+  nft_min_timestep: 0
+  nft_max_timestep: 1000
+  diffusion_ratio: 0.5
+  consistency_ratio: 0.25
+  decay_type: 1
+  nft_decay_interval: 1
+  central_diff_epsilon: 5.0
+  cd_velocity_source: noise_minus_x0
+  share_cd_with_old: true
+  reward_fn:
+    pickscore: 1.0
+    hpsv2: 1.0
+    clipscore: 1.0
+  reward_ckpt_path: models/reward_ckpts
+  log_sample_images: 8
+solver:
+  generator:
+    lr: 3.0e-06
+    warmup_steps: 0
+    beta1: 0.9
+    beta2: 0.999
+    eps: 1.0e-08
+    weight_decay: 0.0001
+    max_grad_norm: 1.0
+train:
+  total_steps: 0
+  save_interval: 100
+  log_interval: 1
+  seed: 42
+  batch_size: 9
+  gradient_accumulation_steps: 1
+  autocast_dtype: bf16
+  resume_from: ''
+  use_ema: true
+  ema_decay: 0.9
+  ema_every: 1
+distributed:
+  strategy: fsdp
+  fsdp_sharding: full_shard
+logging:
+  project: meanflownft
+  run_name: sd35m-meanflow-nft
+  entity: ''
+  tags:
+  - sd35m
+  - meanflow-nft
+  - rl
+  - '512'
+  enabled: true
+eval:
+  enabled: true
+  eval_interval: 50
+  eval_prompt_source: dataset
+  dataset: drawbench
+  dataset_path: dataset
+  reward_fn:
+    imagereward: 1.0
+    pickscore: 1.0
+    aesthetic: 1.0
+    clipscore: 1.0
+    hpsv2: 1.0
+    hpsv3: 1.0
+    geneval2: 1.0
+    ocr: 1.0
+  reward_dataset_map:
+    imagereward: drawbench
+    pickscore: drawbench
+    aesthetic: drawbench
+    clipscore: drawbench
+    hpsv2: drawbench
+    hpsv3: hpsv3
+    ocr: ocr
+    geneval2: geneval2
+  reward_ckpt_path: models/reward_ckpts
+  eval_num_steps: 4
+  eval_guidance_scale: 1.0
+  eval_batch_size: 16
+  num_media_images: 64
+  eval_seed: 12345
+prompt_path: dataset/pickscore
+output_dir: ./outputs/sd35m_meanflow_nft
