@@ -15,7 +15,7 @@
 
 \* Equal contribution &nbsp;&nbsp; <sup>✉</sup>Corresponding authors
 
-[![arXiv](https://img.shields.io/badge/arXiv-xxx-A42C25?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/xxx)
+[![arXiv](https://img.shields.io/badge/arXiv-2607.15273-A42C25?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2607.15273)
 [![Project Page](https://img.shields.io/badge/Project-Page-0F9D8A?style=for-the-badge&logo=googlechrome&logoColor=white)](https://harahan.github.io/meanflownft-project-page/)
 [![Hugging Face](https://img.shields.io/badge/🤗-Models-FFD21E?style=for-the-badge)](https://huggingface.co/Harahan/MeanFlowNFT)
 
@@ -322,11 +322,14 @@ training-aligned four-step, CFG-free MeanFlow sampler.
 ## 📄 Citation
 
 ```bibtex
-@misc{huang2026meanflownft,
+@misc{huang2026meanflownftbringingforwardprocessrl,
   title  = {MeanFlowNFT: Bringing Forward-Process RL to Average-Velocity Generators},
   author = {Huang, Yushi and Zhou, Xiangxin and Zhang, Jun and Bo, Liefeng and Pang, Tianyu},
-  year   = {2026},
-  note   = {Preprint}
+  year={2026},
+  eprint={2607.15273},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2607.15273}, 
 }
 ```
 
