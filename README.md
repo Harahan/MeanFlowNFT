@@ -18,6 +18,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2607.15273-A42C25?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2607.15273)
 [![Project Page](https://img.shields.io/badge/Project-Page-0F9D8A?style=for-the-badge&logo=googlechrome&logoColor=white)](https://harahan.github.io/meanflownft-project-page/)
 [![Hugging Face](https://img.shields.io/badge/🤗-Models-FFD21E?style=for-the-badge)](https://huggingface.co/Harahan/MeanFlowNFT)
+[![Demo](https://img.shields.io/badge/🤗-Interactive_Demo-FF4B4B?style=for-the-badge)](https://huggingface.co/spaces/Harahan/meanflownft-fewstep-generation)
 
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
